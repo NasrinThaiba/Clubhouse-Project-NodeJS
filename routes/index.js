@@ -36,19 +36,21 @@ router.post("/join-club", ensureAuth, async (req, res) => {
     res.redirect("/")
 })
 
-router.post("/delete/:id", ensureAuth, async(req, res) => {
-    console.log("Delete route hit");
-    console.log("User:", req.user);
-    console.log("Message ID:", req.params.id);
 
-    if(!req.user.isAdmin){
-        return res.redirect("/")
+router.post("/make-admin", ensureAuth, async (req, res) => {
+    if (req.body.secret === process.env.ADMIN_PASSCODE) {
+        await User.findByIdAndUpdate(req.user._id, { isAdmin: true });
     }
+    res.redirect("/");
+});
 
-    if(req.body.passcode === process.env.ADMIN_PASSCODE) {
-        await Message.findByIdAndDelete(req.params.id);
-        res.redirect("/")
+router.post("/delete/:id", ensureAuth, async (req, res) => {
+    if (!req.user.isAdmin) {
+        return res.redirect("/");
     }
-})
+    await Message.findByIdAndDelete(req.params.id);
+    res.redirect("/");
+});
+
 
 module.exports = router;

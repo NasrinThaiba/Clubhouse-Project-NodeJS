@@ -7,45 +7,98 @@
   <title>Exclusive Clubhouse</title>
 </head>
 <body>
-  <h1>Exclusive Clubhouse</h1>
-  <% if (currentUser) { %>
-    <a href="/logout">Logout</a>
-    <a href="/new-message">New Message</a>
 
-     <% if (!currentUser.isMember) { %>
-      <form method="POST" action="/join-club">
-        <input name="passcode" placeholder="Club Passcode">
-        <button>Join Club</button>
-      </form>
+  <!-- 🔵 NAVBAR -->
+  <nav class="navbar">
+    <h2 class="logo">Clubhouse</h2>
+
+    <div class="nav-right">
+      <% if (currentUser) { %>
+        <div class="dropdown">
+          <button class="dropbtn">
+            <%= currentUser.firstName %> ⌄
+          </button>
+
+          <div class="dropdown-content">
+
+            <% if (!currentUser.isMember) { %>
+              <button onclick="toggleMember()">Join Club</button>
+            <% } %>
+
+            <% if (!currentUser.isAdmin) { %>
+              <button onclick="toggleAdmin()">Become Admin</button>
+            <% } %>
+
+            <a href="/new-message">New Message</a>
+            <a href="/logout">Logout</a>
+
+          </div>
+        </div>
+      <% } else { %>
+        <a href="/login" class="nav-btn">Login</a>
+        <a href="/signup" class="nav-btn">Sign Up</a>
       <% } %>
+    </div>
+  </nav>
 
-  <% } else { %>
-    <a href="/login">Login</a>
-    <a href="/signup">Sign Up</a>
-    <% } %>
 
-  
-  <hr>
+  <!-- 🔵 PASSCODE FORMS (HIDDEN INITIALLY) -->
 
-  <% messages.forEach(message => { %>
-    <h3><%= message.title %></h3>
-    <p><%= message.text %></p>
+  <% if (currentUser) { %>
 
-    <% if (currentUser && currentUser.isMember) { %>
-      <p>Author-by: <%= message.author.firstName %></p>
-      <p>Date: <%= message.createdAt.toDateString() %></p>
-    <% } %>
-
-    <% if (currentUser && currentUser.isAdmin) { %>
-      <form method="POST" action="/delete/<%= message._id %>">
-        <button>Delete</button>
+    <!-- Join Club Form -->
+    <div id="memberForm" class="popup">
+      <form method="POST" action="/join-club">
+        <input name="passcode" placeholder="Enter Club Passcode">
+        <button>Submit</button>
       </form>
-    <% } %>
+    </div>
+
+    <!-- Admin Form -->
+    <div id="adminForm" class="popup">
+      <form method="POST" action="/make-admin">
+        <input name="secret" placeholder="Enter Admin Secret">
+        <button>Submit</button>
+      </form>
+    </div>
+
+  <% } %>
 
 
-    <hr>
+  <!-- 🔵 MESSAGES SECTION -->
+  <div class="container">
+    <% messages.forEach(message => { %>
 
-<% }) %>
+      <div class="card">
+        <h3><%= message.title %></h3>
+        <p><%= message.text %></p>
+
+        <% if (currentUser && currentUser.isMember) { %>
+          <small>By: <%= message.author.firstName %></small><br>
+          <small><%= message.createdAt.toDateString() %></small>
+        <% } %>
+
+        <% if (currentUser && currentUser.isAdmin) { %>
+          <form method="POST" action="/delete/<%= message._id %>">
+            <button class="delete-btn">Delete</button>
+          </form>
+        <% } %>
+
+      </div>
+
+    <% }) %>
+  </div>
+
+
+  <script>
+    function toggleMember() {
+      document.getElementById("memberForm").classList.toggle("show");
+    }
+
+    function toggleAdmin() {
+      document.getElementById("adminForm").classList.toggle("show");
+    }
+  </script>
 
 </body>
 </html>
