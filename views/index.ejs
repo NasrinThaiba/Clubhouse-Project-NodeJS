@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
+  <title>Exclusive Clubhouse</title>
+</head>
+<body>
+  <h1>Exclusive Clubhouse</h1>
+  <% if (currentUser) { %>
+    <a href="/logout">Logout</a>
+    <a href="/new-message">New Message</a>
+
+     <% if (!currentUser.isMember) { %>
+      <form method="POST" action="/join-club">
+        <input name="passcode" placeholder="Club Passcode">
+        <button>Join Club</button>
+      </form>
+      <% } %>
+
+  <% } else { %>
+    <a href="/login">Login</a>
+    <a href="/signup">Sign Up</a>
+    <% } %>
+
+  
+  <hr>
+
+  <% messages.forEach(message => { %>
+    <h3><%= message.title %></h3>
+    <p><%= message.text %></p>
+
+    <% if (currentUser && currentUser.isMember) { %>
+      <p>Author-by: <%= message.author.firstName %></p>
+      <p>Date: <%= message.createdAt.toDateString() %></p>
+    <% } %>
+
+    <% if (currentUser && currentUser.isAdmin) { %>
+      <form method="POST" action="/delete/<%= message._id %>">
+        <button>Delete</button>
+      </form>
+    <% } %>
+
+
+    <hr>
+
+<% }) %>
+
+</body>
+</html>
