@@ -8,7 +8,6 @@
 </head>
 <body>
 
-  <!-- 🔵 NAVBAR -->
   <nav class="navbar">
     <h2 class="logo">Clubhouse</h2>
 
@@ -29,7 +28,6 @@
               <button onclick="toggleAdmin()">Become Admin</button>
             <% } %>
 
-            <a href="/new-message">New Message</a>
             <a href="/logout">Logout</a>
 
           </div>
@@ -67,6 +65,8 @@
 
   <!-- 🔵 MESSAGES SECTION -->
   <div class="container">
+    <a href="/new-message">New Message</a>
+    
     <% messages.forEach(message => { %>
 
       <div class="card">
