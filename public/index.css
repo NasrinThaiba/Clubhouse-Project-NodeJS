@@ -1,111 +1,96 @@
-/* Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-/* Body */
 body {
+  margin: 0;
   background: #f4f6f9;
-  color: #333;
-  padding: 40px;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-/* Headings */
-h1, h2 {
+body > div,
+body > h2 + form {
+  background: white;
+  padding: 35px;
+  width: 380px;
+  max-width: 90%;
+  border-radius: 12px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+h2 {
+  text-align: center;
   margin-bottom: 20px;
-  color: #222;
+  color: #2c3e50;
 }
 
-/* Container */
-div {
-  max-width: 600px;
-  margin: auto;
-}
-
-/* Links */
-a {
-  text-decoration: none;
-  color: white;
-  background: #4a90e2;
-  padding: 8px 14px;
-  border-radius: 5px;
-  margin-right: 10px;
-  display: inline-block;
-  margin-bottom: 10px;
-  transition: 0.3s;
-}
-
-a:hover {
-  background: #357abd;
-}
-
-/* Forms */
 form {
-  margin: 15px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 label {
-  display: block;
-  margin: 10px 0 5px;
-  font-weight: bold;
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
 }
 
-input,
-textarea {
-  width: 100%;
-  padding: 8px;
-  border-radius: 5px;
+input, textarea {
+  padding: 10px;
+  border-radius: 6px;
   border: 1px solid #ccc;
+  outline: none;
+  font-size: 14px;
+  transition: 0.3s ease;
 }
 
 textarea {
-  resize: vertical;
-  min-height: 80px;
+  resize: none;
+  height: 100px;
 }
 
-/* Buttons */
+input:focus,
+textarea:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 6px rgba(102, 126, 234, 0.4);
+}
+
 button {
   margin-top: 10px;
-  padding: 8px 14px;
+  padding: 10px;
   border: none;
-  border-radius: 5px;
-  background: #28a745;
+  border-radius: 6px;
+  background: #667eea;
   color: white;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.3s ease;
 }
 
 button:hover {
-  background: #1e7e34;
+  background: #5a67d8;
 }
 
-/* Delete Button */
-form[action^="/delete"] button {
-  background: #dc3545;
+a {
+  display: block;
+  text-align: center;
+  margin-top: 15px;
+  text-decoration: none;
+  color: #667eea;
+  font-weight: 500;
 }
 
-form[action^="/delete"] button:hover {
-  background: #b02a37;
+a:hover {
+  text-decoration: underline;
 }
 
-/* Message Card */
-h3 {
-  margin-top: 20px;
+.form-container {
+  background: white;
+  padding: 35px;
+  width: 400px;
+  max-width: 90%;
+  border-radius: 12px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
 }
 
-hr {
-  margin: 15px 0;
-  border: none;
-  border-top: 1px solid #ddd;
-}
-
-/* Membership box */
-form[action="/join-club"] {
-  background: #fff3cd;
-  padding: 15px;
-  border-radius: 6px;
-  border: 1px solid #ffeeba;
-}

@@ -8,6 +8,8 @@
 </head>
 <body>
 
+  <div class="all-container">
+
   <nav class="navbar">
     <h2 class="logo">Clubhouse</h2>
 
@@ -20,18 +22,25 @@
 
           <div class="dropdown-content">
 
+            <div class="dropdown-user">
+              <strong>
+                <%= currentUser.firstName + " " + currentUser.secondName %>
+              </strong>
+            </div>
+
             <% if (!currentUser.isMember) { %>
-              <button onclick="toggleMember()">Join Club</button>
+              <button class="dropdown-btn" onclick="toggleMember()">Join Club</button>
             <% } %>
 
-            <% if (!currentUser.isAdmin) { %>
-              <button onclick="toggleAdmin()">Become Admin</button>
+            <% if (currentUser.isMember && !currentUser.isAdmin) { %>
+              <button class="dropdown-btn" onclick="toggleAdmin()">Become Admin</button>
             <% } %>
 
-            <a href="/logout">Logout</a>
+            <a href="/logout" class="dropdown-link">Logout</a>
 
           </div>
         </div>
+
       <% } else { %>
         <a href="/login" class="nav-btn">Login</a>
         <a href="/signup" class="nav-btn">Sign Up</a>
@@ -40,22 +49,19 @@
   </nav>
 
 
-  <!-- 🔵 PASSCODE FORMS (HIDDEN INITIALLY) -->
 
   <% if (currentUser) { %>
 
-    <!-- Join Club Form -->
     <div id="memberForm" class="popup">
       <form method="POST" action="/join-club">
-        <input name="passcode" placeholder="Enter Club Passcode">
+        <input type="password" name="passcode" placeholder="Enter Club Passcode">
         <button>Submit</button>
       </form>
     </div>
 
-    <!-- Admin Form -->
     <div id="adminForm" class="popup">
       <form method="POST" action="/make-admin">
-        <input name="secret" placeholder="Enter Admin Secret">
+        <input type="password" name="secret" placeholder="Enter Admin Secret">
         <button>Submit</button>
       </form>
     </div>
@@ -63,9 +69,10 @@
   <% } %>
 
 
-  <!-- 🔵 MESSAGES SECTION -->
+
   <div class="container">
-    <a href="/new-message">New Message</a>
+
+    <a href="/new-message" class="new-message-btn" >New Message</a>
     
     <% messages.forEach(message => { %>
 
@@ -74,8 +81,8 @@
         <p><%= message.text %></p>
 
         <% if (currentUser && currentUser.isMember) { %>
-          <small>By: <%= message.author.firstName %></small><br>
-          <small><%= message.createdAt.toDateString() %></small>
+          <small>By : <%= message.author.firstName + " " + message.author.secondName %></small><br>
+          <small>Created At : <%= message.createdAt.toDateString() %></small>
         <% } %>
 
         <% if (currentUser && currentUser.isAdmin) { %>
@@ -88,7 +95,7 @@
 
     <% }) %>
   </div>
-
+ 
 
   <script>
     function toggleMember() {
@@ -99,6 +106,7 @@
       document.getElementById("adminForm").classList.toggle("show");
     }
   </script>
-
+  
+  </div>
 </body>
 </html>
