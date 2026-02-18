@@ -11,16 +11,18 @@ router.get("/signup", (req, res) => {
 })
 
 router.post("/signup", [
-    body("username").isEmail(),
-    body("password").isLength({min:6}),
+    body("username").isEmail().withMessage("Enter valid Email"),
+    body("password").isLength({min:6}).withMessage("Password must be at least 6 characters"),
     body("confirmPassword").custom((value, {req}) => value === req.body.password)
                            .withMessage("Passwords must match")
                            
 ], async(req, res)=> {
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
-        //return res.send(errors.array())
-        return res.render("signup", {errors : errors.array()})
+        errors.array().forEach(err => {
+            req.flash("error", err.msg);
+        });
+        return res.redirect("/signup");
     }
 
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
@@ -33,6 +35,7 @@ router.post("/signup", [
     })
 
     await user.save();
+    req.flash("success", "Account created successfully! Please login.");
     res.redirect("/login")
 })
 
@@ -43,7 +46,8 @@ router.get("/login", (req, res) => {
 router.post("/login", 
     passport.authenticate("local", {
         successRedirect : "/",
-        failureRedirect : "/login"
+        failureRedirect : "/login",
+        failureFlash: true
     })
 )
 

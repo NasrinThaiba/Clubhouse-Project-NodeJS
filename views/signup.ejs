@@ -2,31 +2,57 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/index.css">
   <title>Sign Up</title>
+  <link rel="stylesheet" href="/index.css">
 </head>
 <body>
 
-  <div class="form-container">
-  <h2>Sign Up</h2>
-  <form method="POST" action="/signup">
-    <label>First Name</label>
-    <input type="text" name="firstName" required />
-    <label>Second Name</label>
-    <input type="text" name="secondName" required />
-    <label>Username</label>
-    <input type="email" name="username" required />
-    <label>Password</label>
-    <input type="password" name="password" required />
-    <label>Confirm Password</label>
-    <input type="password" name="confirmPassword" required />
+<div class="form-container">
 
-    <button>Sign Up</button>
+    <% if (error.length > 0) { %>
+      <div class="error-message">
+        <% error.forEach(function(msg) { %>
+          <p><%= msg %></p>
+          <% }) %>
+        </div>
+        <% } %>
+
+    <% if (success.length > 0) { %>
+      <div class="success-message">
+        <% success.forEach(function(msg) { %>
+          <p><%= msg %></p>
+          <% }) %>
+        </div>
+        <% } %>
+
+
+  <h2>Sign Up</h2>
+
+  <form method="POST" action="/signup">
+
+    <label>First Name</label>
+    <input type="text" name="firstName" required>
+
+    <label>Second Name</label>
+    <input type="text" name="secondName" required>
+
+    <label>Email</label>
+    <input type="email" name="username" required>
+
+    <label>Password</label>
+    <input type="password" name="password" required>
+
+    <label>Confirm Password</label>
+    <input type="password" name="confirmPassword" required>
+
+    <button type="submit">Sign Up</button>
+
   </form>
 
+  <p>Already have an account?</p>
   <a href="/login">Login</a>
-  </div>
-  
+
+</div>
+
 </body>
 </html>

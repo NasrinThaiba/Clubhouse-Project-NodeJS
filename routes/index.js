@@ -30,17 +30,23 @@ router.post("/new-message", ensureAuth, async (req, res) => {
 })
 
 router.post("/join-club", ensureAuth, async (req, res) => {
-    if(req.body.passcode === process.env.MEMBER_PASSCODE) {
-        await User.findByIdAndUpdate(req.user._id, {isMember : true})
+    if(req.body.passcode !== process.env.MEMBER_PASSCODE) {
+        req.flash("error", "Invalid Club Passcode");
+        return res.redirect("/");
     }
-    res.redirect("/")
+    await User.findByIdAndUpdate(req.user._id, { isMember: true });
+      req.flash("success", "Welcome to the Club 🎉");
+      res.redirect("/");
 })
 
 
 router.post("/make-admin", ensureAuth, async (req, res) => {
-    if (req.body.secret === process.env.ADMIN_PASSCODE) {
-        await User.findByIdAndUpdate(req.user._id, { isAdmin: true });
+    if (req.body.secret !== process.env.ADMIN_PASSCODE) {
+        req.flash("error", "Invalid Admin Secret")
+        return res.redirect("/")
     }
+    await User.findByIdAndUpdate(req.user._id, {isAdmin : true})
+    req.flash("success", "You are now an Admin")
     res.redirect("/");
 });
 

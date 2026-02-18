@@ -4,6 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("./passport");
 const session = require("express-session");
+const flash = require("connect-flash");
 
 const indexRouter = require("./routes/index");
 const authRouter = require("./routes/auth")
@@ -22,7 +23,7 @@ app.set("view engine", "ejs")
 
 app.use(express.static("public"))
 
-app.use(express.urlencoded({extended : true}))
+app.use(express.urlencoded({extended : false}))
 
 app.use(session({
   secret : SECRET_KEY,
@@ -33,9 +34,13 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(flash());
+
 // Make currentUser available in all views
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
+  res.locals.error = req.flash("error");
+  res.locals.success = req.flash("success");
   next();
 })
 

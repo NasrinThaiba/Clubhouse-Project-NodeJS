@@ -10,6 +10,23 @@
 
   <div class="all-container">
 
+    <% if (error.length > 0) { %>
+      <div class="error-message">
+        <% error.forEach(function(msg) { %>
+          <p><%= msg %></p>
+          <% }) %>
+        </div>
+        <% } %>
+
+    <% if (success.length > 0) { %>
+      <div class="success-message">
+        <% success.forEach(function(msg) { %>
+          <p><%= msg %></p>
+          <% }) %>
+        </div>
+        <% } %>
+
+
   <nav class="navbar">
     <h2 class="logo">Clubhouse</h2>
 
