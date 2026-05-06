@@ -10,31 +10,14 @@
 
   <div class="all-container">
 
-    <% if (error.length > 0) { %>
-      <div class="error-message">
-        <% error.forEach(function(msg) { %>
-          <p><%= msg %></p>
-          <% }) %>
-        </div>
-        <% } %>
-
-    <% if (success.length > 0) { %>
-      <div class="success-message">
-        <% success.forEach(function(msg) { %>
-          <p><%= msg %></p>
-          <% }) %>
-        </div>
-        <% } %>
-
-
   <nav class="navbar">
-    <h2 class="logo">Clubhouse</h2>
+    <h2 class="logo">CLUBHOUSE</h2>
 
     <div class="nav-right">
       <% if (currentUser) { %>
         <div class="dropdown">
           <button class="dropbtn">
-            <%= currentUser.firstName %> ⌄
+            <%= currentUser.firstName %> 
           </button>
 
           <div class="dropdown-content">
@@ -65,6 +48,25 @@
     </div>
   </nav>
 
+  <div>
+   <% if (error.length > 0) { %>
+      <div class="error-message">
+        <% error.forEach(function(msg) { %>
+          <p><%= msg %></p>
+          <% }) %>
+        </div>
+        <% } %>
+
+    <% if (success.length > 0) { %>
+      <div class="success-message">
+        <% success.forEach(function(msg) { %>
+          <p><%= msg %></p>
+          <% }) %>
+        </div>
+        <% } %>
+
+  </div>
+
 
 
   <% if (currentUser) { %>
@@ -87,18 +89,21 @@
 
 
 
-  <div class="container">
+<div class="container">
 
-    <a href="/new-message" class="new-message-btn" >New Message</a>
-    
-    <% messages.forEach(message => { %>
+  <div class="top-bar">
+    <div class="title">All Messages</div>
+    <a href="/new-message" class="new-message-btn">+ New Message</a>
+  </div>
+
+  <% messages.forEach(message => { %>
 
       <div class="card">
         <h3><%= message.title %></h3>
-        <p><%= message.text %></p>
+        <div><%= message.text %></div>
 
         <% if (currentUser && currentUser.isMember) { %>
-          <small>By : <%= message.author.firstName + " " + message.author.secondName %></small><br>
+          <small>Created by : <%= message.author.firstName + " " + message.author.secondName %></small><br>
           <small>Created At : <%= message.createdAt.toDateString() %></small>
         <% } %>
 

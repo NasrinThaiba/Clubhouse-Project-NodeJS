@@ -98,6 +98,8 @@ p {
   border-radius: 6px;
   margin-bottom: 10px;
   font-size: 14px;
+  align-items: center;
+  justify-content: center;
 }
 
 .error-container {
@@ -111,6 +113,8 @@ p {
   border-radius: 6px;
   margin-bottom: 10px;
   font-size: 14px;
+  align-items: center;
+  justify-content: center;
 }
 
 @keyframes fadeIn {
