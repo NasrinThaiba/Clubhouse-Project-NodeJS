@@ -102,10 +102,15 @@
         <h3><%= message.title %></h3>
         <div><%= message.text %></div>
 
-        <% if (currentUser && currentUser.isMember) { %>
-          <small>Created by : <%= message.author.firstName + " " + message.author.secondName %></small><br>
-          <small>Created At : <%= message.createdAt.toDateString() %></small>
-        <% } %>
+        <% if (currentUser && currentUser.isMember && message.author) { %>
+          <small>
+            Created by :
+            <%= message.author.firstName %> <%= message.author.secondName %>
+          </small><br>
+          <small>
+            Created At : <%= message.createdAt.toDateString() %>
+          </small>
+          <% } %>
 
         <% if (currentUser && currentUser.isAdmin) { %>
           <form method="POST" action="/delete/<%= message._id %>">
